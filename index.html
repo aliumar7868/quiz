@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>305-EN-DOLOR Landing Pages</title>
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700;9..40,800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    main { padding: 48px 0 64px; }
+    h1 { font-size: 32px; font-weight: 800; margin: 24px 0 8px; }
+    .lede { color: var(--muted); }
+    .grid { display: grid; gap: 16px; margin-top: 28px; }
+    .grid a { display: block; padding: 22px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); text-decoration: none; }
+    .grid a:hover { border-color: var(--red); }
+    .grid b { font-family: var(--font-heading); font-size: 20px; color: var(--navy); }
+    .grid p { margin-top: 6px; color: var(--muted); font-size: 15px; }
+    .grid code { font-size: 13px; color: var(--red); }
+    @media (min-width: 800px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <img src="assets/img/logo.png" alt="305-EN-DOLOR" width="260" height="74">
+    <h1>Accident intake landing pages</h1>
+    <p class="lede">Three quiz landing pages. Each one shows English or Spanish automatically based on the visitor's phone language. Add <code>?lang=es</code> or <code>?lang=en</code> to force a language.</p>
+    <div class="grid">
+      <a href="payout-check/"><b>1. Free Case Check</b><p>Navy hero with the quiz card above the fold, 14 day Florida urgency band, results, reviews and FAQ.</p><code>/payout-check/</code></a>
+      <a href="case-scan/"><b>2. Case Scan</b><p>App style flow: asks the name first, personalizes each question, runs an animated case scan, then collects contact info.</p><code>/case-scan/</code></a>
+      <a href="free-check/"><b>3. Don't Take the First Offer</b><p>Editorial headline, quiz with a live "Your Case File" panel, how it works, and what to do after an accident.</p><code>/free-check/</code></a>
+    </div>
+  </main>
+</body>
+</html>
