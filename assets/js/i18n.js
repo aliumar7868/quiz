@@ -153,7 +153,7 @@
       'cta.call': 'Call Now',
       'cta.callShort': 'Call',
       'cta.free': 'Free Case Check',
-      'header.spanish': 'Se habla español',
+      'header.spanish': 'English &amp; Spanish · 24/7',
 
       'trust.free': '100% Free Consultation',
       'trust.fast': '5 Min Response · 24/7',
@@ -243,7 +243,7 @@
       'cta.call': 'Llama Ahora',
       'cta.callShort': 'Llamar',
       'cta.free': 'Revisión gratis',
-      'header.spanish': 'Hablamos español',
+      'header.spanish': 'Español e inglés · 24/7',
 
       'trust.free': 'Consulta 100% gratis',
       'trust.fast': 'Respuesta en 5 min · 24/7',
