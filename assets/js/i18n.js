@@ -55,8 +55,6 @@
     if (str === undefined) return key;
     var cfg = window.LP_CONFIG || {};
     var all = {
-      phone: cfg.phoneDisplay,
-      tel: cfg.phoneTel,
       brand: cfg.brand,
       privacyUrl: siteUrl('/privacy', lang),
       termsUrl: siteUrl('/terms', lang),
@@ -70,7 +68,6 @@
 
   function apply(root) {
     root = root || document;
-    var cfg = window.LP_CONFIG || {};
 
     root.querySelectorAll('[data-i18n]').forEach(function (el) {
       el.innerHTML = t(el.getAttribute('data-i18n'));
@@ -83,12 +80,6 @@
     });
     root.querySelectorAll('[data-site-path]').forEach(function (el) {
       el.setAttribute('href', siteUrl(el.getAttribute('data-site-path')));
-    });
-    root.querySelectorAll('[data-tel]').forEach(function (el) {
-      el.setAttribute('href', 'tel:' + cfg.phoneTel);
-    });
-    root.querySelectorAll('[data-phone]').forEach(function (el) {
-      el.textContent = cfg.phoneDisplay;
     });
     root.querySelectorAll('[data-lang-toggle]').forEach(function (el) {
       el.textContent = t('lang.switch');
@@ -150,39 +141,11 @@
     en: {
       'lang.switch': 'Español',
       'lang.switchAria': 'Ver esta página en español',
-      'cta.call': 'Call Now',
-      'cta.callShort': 'Call',
-      'cta.free': 'Free Case Check',
       'header.spanish': 'English &amp; Spanish · 24/7',
-
       'trust.free': '100% Free Consultation',
       'trust.fast': '5 Min Response · 24/7',
       'trust.nofee': 'No Upfront Fees',
       'trust.bilingual': 'English &amp; Spanish',
-
-      'stats.recovered': 'Total Recovered',
-      'stats.cases': 'Cases Won',
-      'stats.satisfaction': 'Client Satisfaction',
-      'stats.available': 'Always Available',
-
-      'res.truck': 'Truck Accident',
-      'res.truck.d': 'Spinal cord injury: commercial truck rear end collision on I‑95.',
-      'res.car': 'Car Accident',
-      'res.car.d': 'Traumatic brain injury: drunk driver ran a red light in Miami‑Dade.',
-      'res.rideshare': 'Rideshare Accident',
-      'res.rideshare.d': 'Multiple fractures: Uber driver at fault collision in Downtown Miami.',
-      'res.moto': 'Motorcycle Accident',
-      'res.moto.d': 'Leg amputation: driver failed to yield on US‑1.',
-      'res.slip': 'Slip &amp; Fall',
-      'res.slip.d': 'Hip fracture: negligent property maintenance in Coral Gables.',
-      'res.note': '* Settlements achieved by some of the lawyers we link you with. Past results do not guarantee future outcomes. Every case is unique.',
-
-      'tst.1': 'They got me $180K after my accident. Best decision I ever made.',
-      'tst.2': 'Available 24/7. They answered at 2 AM when I needed help most.',
-      'tst.3': 'No upfront fees and they fought hard for every dollar I deserved.',
-      'tst.4': 'Bilingual team made everything easy. Settled in 4 months.',
-      'tst.5': 'From ER to settlement, they handled everything. 5 stars.',
-      'tst.6': 'I was scared to call a lawyer. They made it simple and stress free.',
 
       'q.stepOf': 'Step {n} of {total}',
       'q.questionOf': 'Question {n} of {total}',
@@ -217,19 +180,17 @@
       'f.err.phone': 'Please enter a valid 10 digit US phone number.',
       'f.submit': 'Get My Free Case Review',
       'f.sending': 'Sending…',
-      'f.error': 'Something went wrong. Please try again or call us at <a href="tel:{tel}">{phone}</a>.',
+      'f.error': 'Something went wrong. Please check your connection and try again.',
       'f.consent': 'By clicking “{button}”, I agree that {brand} (operated by LegalNow247.com LLC) and its participating attorneys may contact me about my accident at the phone number and email I provided, including by calls and text messages that may use automated technology or prerecorded or artificial voice messages, even if my number is on a Do Not Call list. Consent is not a condition of any purchase or service. Message and data rates may apply; reply STOP to opt out. I agree to the <a href="{privacyUrl}" target="_blank" rel="noopener">Privacy Policy</a> and <a href="{termsUrl}" target="_blank" rel="noopener">Terms of Use</a>.',
 
       'done.title': 'Thank you, {name}!',
       'done.titleNoName': 'Thank you!',
-      'done.text': 'Your free case review request was received. A bilingual case specialist will call you shortly from <strong>{phone}</strong>. Please answer the call.',
+      'done.text': 'Your free case review request was received. A bilingual case specialist will call you shortly. Please keep your phone nearby and answer the call.',
       'done.next': 'What happens next',
       'done.1': 'A specialist reviews your answers, usually within 5 minutes during business hours.',
       'done.2': 'We call you to hear what happened and answer your questions, in English or Spanish.',
       'done.3': 'If you have a case, we connect you with an attorney. No upfront fees.',
-      'done.call': 'Can’t wait? Call {phone}',
 
-      'footer.legal': 'This website provides general information and is not legal advice. Contact us to discuss your situation and available next steps.',
       'footer.notice': '<strong>NOTICE ABOUT ATTORNEY ADVERTISING:</strong> This website is a pooled attorney advertisement. 305-EN-DOLOR is not a law firm or a lawyer referral service. Attorneys appearing on 305-EN-DOLOR have paid an advertising fee. Using 305-EN-DOLOR is not intended to and does not create an attorney client relationship between a Subscriber Attorney and any Requestors. The information contained on 305-EN-DOLOR is not legal advice and the subscriber attorneys listed do not in any way constitute a referral or endorsement by this site. 305-EN-DOLOR is owned and operated by LegalNow247.com LLC.',
       'footer.states': 'If you live in AL, FL, MO, NY or WY, <a href="{statesUrl}" target="_blank" rel="noopener">click here</a> to see additional information about attorney advertising in your state.',
       'footer.privacy': 'Privacy Policy',
@@ -240,39 +201,11 @@
     es: {
       'lang.switch': 'English',
       'lang.switchAria': 'View this page in English',
-      'cta.call': 'Llama Ahora',
-      'cta.callShort': 'Llamar',
-      'cta.free': 'Revisión gratis',
       'header.spanish': 'Español e inglés · 24/7',
-
       'trust.free': 'Consulta 100% gratis',
       'trust.fast': 'Respuesta en 5 min · 24/7',
       'trust.nofee': 'Sin honorarios por adelantado',
       'trust.bilingual': 'Inglés y Español',
-
-      'stats.recovered': 'Total Recuperado',
-      'stats.cases': 'Casos Ganados',
-      'stats.satisfaction': 'Satisfacción',
-      'stats.available': 'Siempre Disponible',
-
-      'res.truck': 'Accidente de Camión',
-      'res.truck.d': 'Lesión de médula espinal: colisión trasera de camión comercial en la I‑95.',
-      'res.car': 'Accidente de Auto',
-      'res.car.d': 'Lesión cerebral traumática: conductor ebrio pasó un semáforo en rojo en Miami‑Dade.',
-      'res.rideshare': 'Accidente de Rideshare',
-      'res.rideshare.d': 'Fracturas múltiples: conductor de Uber culpable en el centro de Miami.',
-      'res.moto': 'Accidente de Motocicleta',
-      'res.moto.d': 'Amputación de pierna: conductor no cedió el paso en la US‑1.',
-      'res.slip': 'Resbalón y Caída',
-      'res.slip.d': 'Fractura de cadera: mantenimiento negligente de una propiedad en Coral Gables.',
-      'res.note': '* Acuerdos logrados por algunos de los abogados con quienes te conectamos. Los resultados pasados no garantizan resultados futuros. Cada caso es único.',
-
-      'tst.1': 'Me consiguieron $180K después de mi accidente. La mejor decisión que he tomado.',
-      'tst.2': 'Disponibles 24/7. Me contestaron a las 2 AM cuando más necesitaba ayuda.',
-      'tst.3': 'Sin pagos por adelantado y lucharon por cada dólar que merecía.',
-      'tst.4': 'El equipo bilingüe hizo todo fácil. Mi caso se resolvió en 4 meses.',
-      'tst.5': 'De la sala de emergencias al acuerdo, se encargaron de todo. 5 estrellas.',
-      'tst.6': 'Me daba miedo llamar a un abogado. Lo hicieron simple y sin estrés.',
 
       'q.stepOf': 'Paso {n} de {total}',
       'q.questionOf': 'Pregunta {n} de {total}',
@@ -307,19 +240,17 @@
       'f.err.phone': 'Por favor escribe un número de teléfono válido de 10 dígitos.',
       'f.submit': 'Obtener mi revisión gratis',
       'f.sending': 'Enviando…',
-      'f.error': 'Algo salió mal. Inténtalo de nuevo o llámanos al <a href="tel:{tel}">{phone}</a>.',
+      'f.error': 'Algo salió mal. Revisa tu conexión e inténtalo de nuevo.',
       'f.consent': 'Al hacer clic en “{button}”, acepto que {brand} (operado por LegalNow247.com LLC) y sus abogados participantes me contacten sobre mi accidente al número de teléfono y correo electrónico que proporcioné, incluso mediante llamadas y mensajes de texto que pueden usar tecnología automatizada o mensajes pregrabados o de voz artificial, aunque mi número esté en una lista de No Llamar. El consentimiento no es una condición para ninguna compra o servicio. Pueden aplicarse tarifas de mensajes y datos; responde STOP para cancelar. Acepto la <a href="{privacyUrl}" target="_blank" rel="noopener">Política de privacidad</a> y los <a href="{termsUrl}" target="_blank" rel="noopener">Términos de uso</a>.',
 
       'done.title': '¡Gracias, {name}!',
       'done.titleNoName': '¡Gracias!',
-      'done.text': 'Recibimos tu solicitud de revisión gratuita. Un especialista bilingüe te llamará en breve desde el <strong>{phone}</strong>. Por favor contesta la llamada.',
+      'done.text': 'Recibimos tu solicitud de revisión gratuita. Un especialista bilingüe te llamará en breve. Ten tu teléfono a la mano y contesta la llamada.',
       'done.next': 'Qué sigue',
       'done.1': 'Un especialista revisa tus respuestas, normalmente en 5 minutos durante el horario de atención.',
       'done.2': 'Te llamamos para escuchar lo que pasó y responder tus preguntas, en español o en inglés.',
       'done.3': 'Si tienes un caso, te conectamos con un abogado. Sin honorarios por adelantado.',
-      'done.call': '¿No quieres esperar? Llama al {phone}',
 
-      'footer.legal': 'Este sitio web ofrece información general y no constituye asesoramiento legal. Contáctanos para hablar sobre tu situación y los próximos pasos disponibles.',
       'footer.notice': '<strong>AVISO SOBRE PUBLICIDAD DE ABOGADOS:</strong> Este sitio web es un anuncio colectivo de abogados. 305-EN-DOLOR no es un bufete de abogados ni un servicio de referencia de abogados. Los abogados que aparecen en 305-EN-DOLOR han pagado una tarifa publicitaria. El uso de 305-EN-DOLOR no pretende ni crea una relación abogado cliente entre un Abogado Suscriptor y cualquier Solicitante. La información contenida en 305-EN-DOLOR no es asesoramiento legal y los abogados suscriptores enumerados no constituyen de ninguna manera una referencia o respaldo por parte de este sitio. 305-EN-DOLOR es propiedad de LegalNow247.com LLC.',
       'footer.states': 'Si vives en AL, FL, MO, NY o WY, <a href="{statesUrl}" target="_blank" rel="noopener">haz clic aquí</a> para ver información adicional sobre publicidad de abogados en tu estado.',
       'footer.privacy': 'Política de privacidad',

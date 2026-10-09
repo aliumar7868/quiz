@@ -1,11 +1,9 @@
 /*
  * Landing page settings shared by every 305-EN-DOLOR quiz page.
- * Edit this one file to change the phone number or where leads are sent.
+ * Edit this one file to change where leads are sent.
  */
 window.LP_CONFIG = {
   brand: '305-EN-DOLOR',
-  phoneDisplay: '(305) 363-6567',
-  phoneTel: '+13053636567',
   siteUrl: 'https://305endolor.com',
 
   // Where completed quiz leads are POSTed, e.g. a GoHighLevel, Zapier,

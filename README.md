@@ -7,11 +7,14 @@ no build step, so the folder can be uploaded to any static host
 
 | Page | Path | Style |
 | --- | --- | --- |
-| Free Case Check | `/payout-check/` | Quiz card in the hero, Florida 14 day urgency band, stats, results, reviews, FAQ |
+| Free Case Check | `/payout-check/` | Navy hero: headline and quiz card side by side |
 | Case Scan | `/case-scan/` | App style flow with stage tracker, name first and personalized questions, animated scan before the contact step |
-| Don't Take the First Offer | `/free-check/` | Editorial headline, quiz with a live "Your Case File" summary, how it works, what to do after an accident |
+| Don't Take the First Offer | `/free-check/` | Bold headline next to the quiz, with a live "Your Case File" summary on desktop |
 
-`/index.html` is an internal directory of the three pages (marked `noindex`).
+Each page is a single screen: logo and language toggle, the quiz, and the required attorney
+advertising notice. There is no phone number or call button, so visitors complete the form.
+
+`/index.html` is a simple page with a button for each landing page (marked `noindex`).
 
 ## Language
 
@@ -67,5 +70,4 @@ Tracking: the quiz pushes `quiz_start`, `quiz_step` and `lead_submit` events to 
 ## Before launch
 
 * Have counsel review the TCPA consent text (`f.consent` in `assets/js/i18n.js`) and the attorney advertising notice.
-* Confirm the results, stats and testimonials (copied from 305endolor.com) are approved for ads.
 * Add your GTM / Meta Pixel snippets to each page `<head>`.

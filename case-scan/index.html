@@ -28,7 +28,6 @@
         'intro.p1': '60 seconds',
         'intro.p2': '100% free',
         'intro.p3': 'Private &amp; secure',
-        'intro.team': 'Reviewed by the 305-EN-DOLOR team, 24/7 in English &amp; Spanish',
         'cs.name.title': 'First, what’s your name?',
         'cs.name.sub': 'We’ll use it to personalize your case scan.',
         'cs.name.next': 'Start My Scan',
@@ -43,19 +42,7 @@
         'cs.contact.title': 'Your case scan is complete!',
         'cs.contact.named': '{name}, your case scan is complete!',
         'cs.contact.sub': 'Your case is ready for a free review. Where can your specialist reach you?',
-        'cs.submit': 'Send My Case for Review',
-        'check.eyebrow': 'What your scan looks at',
-        'check.title': 'The details that matter most after an accident',
-        'check.1.t': 'Type of accident',
-        'check.1.d': 'Car, motorcycle, truck, Uber / Lyft or slip &amp; fall cases are handled differently.',
-        'check.2.t': 'Timing',
-        'check.2.d': 'Florida only allows 14 days after an accident to seek medical care for PIP benefits.',
-        'check.3.t': 'Injuries &amp; evidence',
-        'check.3.d': 'Injuries and a police report can make a big difference in what your claim may support.',
-        'check.4.t': 'Representation',
-        'check.4.d': 'Whether you already have an attorney helps us point you to the right next step.',
-        'results.title': 'Settlements won by lawyers we link you with',
-        'reviews.title': 'What people say after calling us'
+        'cs.submit': 'Send My Case for Review'
       },
       es: {
         'meta.title': 'Revisión gratis de tu caso de accidente | 305-EN-DOLOR',
@@ -70,7 +57,6 @@
         'intro.p1': '60 segundos',
         'intro.p2': '100% gratis',
         'intro.p3': 'Privado y seguro',
-        'intro.team': 'Revisado por el equipo de 305-EN-DOLOR, 24/7 en español e inglés',
         'cs.name.title': 'Primero, ¿cuál es tu nombre?',
         'cs.name.sub': 'Lo usaremos para personalizar la revisión de tu caso.',
         'cs.name.next': 'Comenzar mi revisión',
@@ -85,19 +71,7 @@
         'cs.contact.title': '¡La revisión de tu caso está completa!',
         'cs.contact.named': '¡{name}, la revisión de tu caso está completa!',
         'cs.contact.sub': 'Tu caso está listo para una revisión gratis. ¿Dónde puede contactarte tu especialista?',
-        'cs.submit': 'Enviar mi caso a revisión',
-        'check.eyebrow': 'Qué revisamos',
-        'check.title': 'Los detalles que más importan después de un accidente',
-        'check.1.t': 'Tipo de accidente',
-        'check.1.d': 'Los casos de auto, motocicleta, camión, Uber / Lyft o resbalones y caídas se manejan de forma diferente.',
-        'check.2.t': 'El tiempo',
-        'check.2.d': 'Florida solo permite 14 días después de un accidente para buscar atención médica y recibir beneficios PIP.',
-        'check.3.t': 'Lesiones y evidencia',
-        'check.3.d': 'Las lesiones y un reporte policial pueden hacer una gran diferencia en lo que tu reclamo puede respaldar.',
-        'check.4.t': 'Representación',
-        'check.4.d': 'Saber si ya tienes abogado nos ayuda a indicarte el próximo paso correcto.',
-        'results.title': 'Acuerdos logrados por abogados con quienes te conectamos',
-        'reviews.title': 'Lo que dicen después de llamarnos'
+        'cs.submit': 'Enviar mi caso a revisión'
       }
     });
   </script>
@@ -105,11 +79,12 @@
     body { background: var(--navy-ink); }
     .scan-app {
       position: relative; color: #fff; overflow: hidden;
+      min-height: calc(100svh - 64px);
       background:
         radial-gradient(900px 420px at 50% -120px, rgb(180 34 51 / .35), transparent 70%),
         radial-gradient(700px 500px at 100% 100%, rgb(30 79 160 / .35), transparent 70%),
         var(--navy-ink);
-      padding: 20px 0 48px;
+      padding: 20px 0 40px;
     }
     .scan-app::before {
       content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -120,8 +95,8 @@
     }
     .scan-wrap { position: relative; max-width: 600px; margin: 0 auto; padding: 0 var(--gutter); }
 
-    .stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; list-style: none; padding: 0; }
-    .stages li { position: relative; display: grid; gap: 8px; font-size: 12px; font-weight: 600; color: #8c9ab3; text-align: center; }
+    .stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 18px; list-style: none; padding: 0; }
+    .stages li { display: grid; gap: 8px; font-size: 12px; font-weight: 600; color: #8c9ab3; text-align: center; }
     .stages li::before { content: ""; height: 5px; border-radius: 99px; background: rgb(255 255 255 / .14); transition: background .3s; }
     .stages li.is-active { color: #fff; }
     .stages li.is-active::before { background: linear-gradient(90deg, var(--red), var(--red-bright)); }
@@ -129,136 +104,72 @@
     .stages li.is-done::before { background: var(--green); }
 
     .scan-card { background: #fff; color: var(--ink); border-radius: 20px; box-shadow: 0 30px 80px rgb(0 0 0 / .45); padding: 22px 18px 18px; }
+    .scan-card .quiz-progress { height: 5px; margin-bottom: 18px; }
     @media (min-width: 600px) { .scan-card { padding: 30px 30px 24px; } }
 
     .intro { text-align: center; }
     .intro-photo { width: 96px; height: 96px; margin: 0 auto 14px; border-radius: 50%; object-fit: cover; object-position: 50% 8%; border: 3px solid #fff; box-shadow: 0 0 0 4px var(--red); background: var(--navy-deep); }
     .intro-badge { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--red-tint); color: var(--red); font-size: 13px; font-weight: 700; }
-    .intro h1 { margin-top: 14px; font-size: clamp(27px, 6vw, 38px); font-weight: 800; color: var(--navy-ink); }
+    .intro h1 { margin-top: 14px; font-size: clamp(26px, 6vw, 36px); font-weight: 800; color: var(--navy-ink); }
     .intro p { margin: 12px auto 0; max-width: 460px; color: var(--muted); }
     .intro .btn { margin-top: 22px; }
     .intro-points { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 14px; font-weight: 600; color: var(--navy); }
     .intro-points li { display: inline-flex; align-items: center; gap: 6px; }
     .intro-points svg { width: 16px; height: 16px; color: var(--green); }
-    .intro-team { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
 
-    .scan-card .quiz-progress { height: 5px; margin-bottom: 18px; }
-    .below-trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-top: 22px; color: #c9d3e3; }
+    .below-trust { justify-content: center; margin-top: 20px; color: #c9d3e3; }
     .below-trust li { font-size: 13px; }
-
-    .light { background: var(--bg); }
-    .check-grid { display: grid; gap: 14px; }
-    .check-grid article { display: flex; gap: 14px; padding: 20px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); }
-    .check-grid .n { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--navy); color: #fff; font-family: var(--font-heading); font-weight: 800; }
-    .check-grid h3 { font-size: 18px; font-weight: 800; }
-    .check-grid p { margin-top: 4px; color: var(--muted); font-size: 15px; }
-    @media (min-width: 760px) { .check-grid { grid-template-columns: repeat(2, 1fr); } }
-    .again { text-align: center; margin-top: 32px; }
+    @media (min-width: 760px) { .scan-app { min-height: calc(100svh - 76px); padding-top: 36px; } }
   </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container">
-      <a class="site-logo" href="#top" aria-label="305-EN-DOLOR"><img src="../assets/img/horizontal.png" alt="¿Accidente? 305-EN-DOLOR" width="1737" height="608"></a>
+      <span class="site-logo"><img src="../assets/img/horizontal.png" alt="¿Accidente? 305-EN-DOLOR" width="1737" height="608"></span>
       <div class="header-actions">
         <span class="header-note" data-i18n="header.spanish">English &amp; Spanish · 24/7</span>
         <button type="button" class="lang-toggle" data-lang-toggle>Español</button>
-        <a class="btn btn-primary btn-header" data-tel href="tel:+13053636567">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8z"/></svg>
-          <span class="full" data-phone>(305) 363-6567</span><span class="short" data-i18n="cta.callShort">Call</span>
-        </a>
       </div>
     </div>
   </header>
 
-  <main id="top">
-    <section class="scan-app">
-      <div class="scan-wrap">
-        <ol class="stages" id="stages" aria-label="Progress">
-          <li class="is-active" data-i18n="stage.1">Accident Details</li>
-          <li data-i18n="stage.2">Case Review</li>
-          <li data-i18n="stage.3">Your Results</li>
-        </ol>
+  <main class="scan-app">
+    <div class="scan-wrap">
+      <ol class="stages" id="stages" aria-label="Progress">
+        <li class="is-active" data-i18n="stage.1">Accident Details</li>
+        <li data-i18n="stage.2">Case Review</li>
+        <li data-i18n="stage.3">Your Results</li>
+      </ol>
 
-        <div class="scan-card" data-quiz-watch>
-          <div class="intro" id="intro">
-            <img class="intro-photo" src="../assets/img/remove-the-background-completely-keep-on-DhIvIZ.png" alt="" width="96" height="96">
-            <span class="intro-badge" data-i18n="intro.badge">Free · 60 seconds · Private</span>
-            <h1 data-i18n="intro.title">Find out if your accident case is worth pursuing.</h1>
-            <p data-i18n="intro.sub">Run a free case scan.</p>
-            <button type="button" class="btn btn-primary btn-lg btn-block" id="start" data-quiz-start>
-              <span data-i18n="intro.cta">Start My Free Scan</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
-            <ul class="intro-points">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="intro.p1">60 seconds</span></li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></svg><span data-i18n="intro.p2">100% free</span></li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-i18n="intro.p3">Private &amp; secure</span></li>
-            </ul>
-            <p class="intro-team" data-i18n="intro.team">Reviewed by the 305-EN-DOLOR team, 24/7 in English &amp; Spanish</p>
-          </div>
-          <div id="quiz" hidden></div>
+      <div class="scan-card">
+        <div class="intro" id="intro">
+          <img class="intro-photo" src="../assets/img/remove-the-background-completely-keep-on-DhIvIZ.png" alt="" width="96" height="96">
+          <span class="intro-badge" data-i18n="intro.badge">Free · 60 seconds · Private</span>
+          <h1 data-i18n="intro.title">Find out if your accident case is worth pursuing.</h1>
+          <p data-i18n="intro.sub">Run a free case scan.</p>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="start">
+            <span data-i18n="intro.cta">Start My Free Scan</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <ul class="intro-points">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="intro.p1">60 seconds</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7L16 9.8"/></svg><span data-i18n="intro.p2">100% free</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-i18n="intro.p3">Private &amp; secure</span></li>
+          </ul>
         </div>
-
-        <ul class="chips below-trust">
-          <li data-i18n="trust.nofee">No Upfront Fees</li>
-          <li data-i18n="trust.fast">5 Min Response · 24/7</li>
-          <li data-i18n="trust.bilingual">English &amp; Spanish</li>
-        </ul>
+        <div id="quiz" hidden></div>
       </div>
-    </section>
 
-    <section class="section light">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-i18n="check.eyebrow">What your scan looks at</span>
-          <h2 class="section-title" data-i18n="check.title">The details that matter most after an accident</h2>
-        </div>
-        <div class="check-grid">
-          <article><span class="n">1</span><div><h3 data-i18n="check.1.t"></h3><p data-i18n="check.1.d"></p></div></article>
-          <article><span class="n">2</span><div><h3 data-i18n="check.2.t"></h3><p data-i18n="check.2.d"></p></div></article>
-          <article><span class="n">3</span><div><h3 data-i18n="check.3.t"></h3><p data-i18n="check.3.d"></p></div></article>
-          <article><span class="n">4</span><div><h3 data-i18n="check.4.t"></h3><p data-i18n="check.4.d"></p></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" style="background:#fff">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-i18n="results.eyebrow">Real results</span>
-          <h2 class="section-title" data-i18n="results.title">Settlements won by lawyers we link you with</h2>
-        </div>
-        <div class="results">
-          <article class="result"><b>$4,200,000</b><h3 data-i18n="res.truck">Truck Accident</h3><p data-i18n="res.truck.d"></p></article>
-          <article class="result"><b>$1,850,000</b><h3 data-i18n="res.car">Car Accident</h3><p data-i18n="res.car.d"></p></article>
-          <article class="result"><b>$975,000</b><h3 data-i18n="res.rideshare">Rideshare Accident</h3><p data-i18n="res.rideshare.d"></p></article>
-          <article class="result"><b>$720,000</b><h3 data-i18n="res.slip">Slip &amp; Fall</h3><p data-i18n="res.slip.d"></p></article>
-        </div>
-        <p class="results-note" data-i18n="res.note"></p>
-      </div>
-    </section>
-
-    <section class="section light">
-      <div class="container">
-        <div class="section-head"><h2 class="section-title" data-i18n="reviews.title">What people say after calling us</h2></div>
-        <div class="reviews">
-          <figure class="review"><div class="stars" aria-label="5/5">★★★★★</div><blockquote data-i18n="tst.3"></blockquote><figcaption>Elena T.</figcaption></figure>
-          <figure class="review"><div class="stars" aria-label="5/5">★★★★★</div><blockquote data-i18n="tst.5"></blockquote><figcaption>Roberto V.</figcaption></figure>
-          <figure class="review"><div class="stars" aria-label="5/5">★★★★★</div><blockquote data-i18n="tst.6"></blockquote><figcaption>Ana P.</figcaption></figure>
-        </div>
-        <div class="again"><a href="#top" class="btn btn-primary btn-lg" data-start-quiz=".scan-card" data-i18n="intro.cta">Start My Free Scan</a></div>
-      </div>
-    </section>
+      <ul class="chips below-trust">
+        <li data-i18n="trust.nofee">No Upfront Fees</li>
+        <li data-i18n="trust.fast">5 Min Response · 24/7</li>
+        <li data-i18n="trust.bilingual">English &amp; Spanish</li>
+      </ul>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-top">
-        <span class="footer-logo"><img src="../assets/img/horizontal.png" alt="305-EN-DOLOR" width="1737" height="608" loading="lazy"></span>
-        <a class="footer-phone" data-tel href="tel:+13053636567" data-phone>(305) 363-6567</a>
-      </div>
-      <p data-i18n="footer.legal"></p>
       <p data-i18n="footer.notice"></p>
       <p data-i18n="footer.states"></p>
       <ul class="footer-links">
@@ -270,13 +181,7 @@
     </div>
   </footer>
 
-  <nav class="mobile-bar" aria-label="Quick actions">
-    <a class="btn btn-call" data-tel href="tel:+13053636567"><span data-i18n="cta.call">Call Now</span></a>
-    <a class="btn btn-primary" href="#top" data-start-quiz=".scan-card" data-i18n="intro.cta">Start My Free Scan</a>
-  </nav>
-
   <script src="../assets/js/quiz.js"></script>
-  <script src="../assets/js/page.js"></script>
   <script>
     (function () {
       var STAGE_OF = { name: 0, accident_type: 0, accident_date: 0, police_report: 1, injured: 1, has_attorney: 1, scan: 1, contact: 2 };
