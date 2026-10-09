@@ -9,7 +9,7 @@ window.LP_CONFIG = {
   // Where completed quiz leads are POSTed, e.g. a GoHighLevel, Zapier,
   // Make or CRM webhook URL. Leave empty to only log leads to
   // the browser console while testing.
-  webhookUrl: '',
+  webhookUrl: 'https://services.leadconnectorhq.com/hooks/5PVc3IMfaiegpuC3USeQ/webhook-trigger/3406dd33-a4f8-4ceb-b906-7a04936ffabd',
 
   // 'json' (default, best for GoHighLevel) or 'form' (form encoded, for
   // webhooks that reject requests sent from a browser).
