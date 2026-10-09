@@ -8,10 +8,14 @@ window.LP_CONFIG = {
   phoneTel: '+13053636567',
   siteUrl: 'https://305endolor.com',
 
-  // Where completed quiz leads are POSTed (form encoded), e.g. a Zapier,
-  // Make, GoHighLevel or CRM webhook URL. Leave empty to only log leads to
+  // Where completed quiz leads are POSTed, e.g. a GoHighLevel, Zapier,
+  // Make or CRM webhook URL. Leave empty to only log leads to
   // the browser console while testing.
   webhookUrl: '',
+
+  // 'json' (default, best for GoHighLevel) or 'form' (form encoded, for
+  // webhooks that reject requests sent from a browser).
+  webhookFormat: 'json',
 
   // Optional: send people to a thank you page after submitting instead of
   // showing the in page confirmation. "{lang}" is replaced with "en" or "es".

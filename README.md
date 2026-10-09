@@ -40,8 +40,9 @@ The order of the steps is set in the `LPQuiz.mount({ steps: [...] })` call at th
 
 ## Sending leads
 
-Set `webhookUrl` in `assets/js/config.js` to a Zapier, Make, GoHighLevel or CRM webhook.
-Leads are POSTed form encoded with these fields:
+Set `webhookUrl` in `assets/js/config.js` to a GoHighLevel Inbound Webhook (or a Zapier, Make or CRM webhook).
+Leads are POSTed as JSON. If a webhook refuses requests sent from a browser, set `webhookFormat: 'form'`
+to send them form encoded instead. Fields sent:
 
 ```
 full_name, first_name, last_name, email, phone (+1XXXXXXXXXX), phone_display,
@@ -51,6 +52,8 @@ police_report, injured, has_attorney (yes | no),
 qualified (yes when injured = yes and has_attorney = no),
 language (en | es), landing_page, page_url, referrer, user_agent, submitted_at,
 tcpa_consent, tcpa_consent_text,
+language_label, police_report_label, injured_label, has_attorney_label (readable Yes / No),
+tags (suggested, comma separated), lead_summary (all answers as plain text lines),
 utm_source, utm_medium, utm_campaign, utm_term, utm_content,
 gclid, gbraid, wbraid, fbclid, msclkid, ttclid
 ```

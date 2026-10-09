@@ -347,6 +347,25 @@
       ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'ttclid'].forEach(function (key) {
         lead[key] = params.get(key) || '';
       });
+      var yn = function (v) { return v === 'yes' ? 'Yes' : v === 'no' ? 'No' : ''; };
+      lead.language_label = I.lang === 'es' ? 'Spanish' : 'English';
+      lead.police_report_label = yn(lead.police_report);
+      lead.injured_label = yn(lead.injured);
+      lead.has_attorney_label = yn(lead.has_attorney);
+      lead.tags = ['305 quiz lead', 'lp ' + lead.landing_page, 'lang ' + lead.language].join(',');
+      // Plain text recap, handy for notification emails and contact notes.
+      lead.lead_summary = [
+        'Name: ' + lead.full_name,
+        'Phone: ' + lead.phone_display,
+        'Email: ' + lead.email,
+        'Accident type: ' + lead.accident_type_label,
+        'When: ' + lead.accident_date_label,
+        'Police report: ' + lead.police_report_label,
+        'Injured: ' + lead.injured_label,
+        'Already has an attorney: ' + lead.has_attorney_label,
+        'Language: ' + lead.language_label,
+        'Landing page: ' + lead.landing_page
+      ].join('\n');
       return lead;
     }
 
@@ -355,14 +374,25 @@
         console.info('[LPQuiz] No webhookUrl set in assets/js/config.js. Lead not sent:', lead);
         return Promise.resolve();
       }
-      // Form encoded + no-cors is a "simple" request, so it works with Zapier,
-      // Make, GoHighLevel and most CRMs without any CORS setup.
+      if (CFG.webhookFormat === 'form') {
+        // Form encoded + no-cors is a "simple" request that works with any
+        // webhook, even ones that do not allow browser (CORS) requests.
+        return fetch(CFG.webhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          keepalive: true,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(lead).toString()
+        });
+      }
+      // JSON (default): GoHighLevel, Zapier and Make read it field by field.
       return fetch(CFG.webhookUrl, {
         method: 'POST',
-        mode: 'no-cors',
         keepalive: true,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(lead).toString()
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('Webhook responded ' + res.status);
       });
     }
 
