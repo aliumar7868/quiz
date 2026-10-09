@@ -196,7 +196,7 @@
       'footer.privacy': 'Privacy Policy',
       'footer.terms': 'Terms of Use',
       'footer.disclosures': 'State Disclosures',
-      'footer.rights': '© 2026 305-EN-DOLOR. All rights reserved. Serving Miami and South Florida.'
+      'footer.rights': '© 2026 305-EN-DOLOR. All rights reserved. Serving all of Florida.'
     },
     es: {
       'lang.switch': 'English',
@@ -256,7 +256,7 @@
       'footer.privacy': 'Política de privacidad',
       'footer.terms': 'Términos de uso',
       'footer.disclosures': 'Avisos estatales',
-      'footer.rights': '© 2026 305-EN-DOLOR. Todos los derechos reservados. Atendemos Miami y el sur de Florida.'
+      'footer.rights': '© 2026 305-EN-DOLOR. Todos los derechos reservados. Atendemos todo el estado de Florida.'
     }
   });
 })();

@@ -9,7 +9,7 @@ no build step, so the folder can be uploaded to any static host
 | --- | --- | --- |
 | Free Case Check | `/payout-check/` | Navy hero: headline and quiz card side by side |
 | Case Scan | `/case-scan/` | App style flow with stage tracker, name first and personalized questions, animated scan before the contact step |
-| Don't Take the First Offer | `/free-check/` | Bold headline next to the quiz, with a live "Your Case File" summary on desktop |
+| Find Out If You Have a Case | `/free-check/` | Simple headline next to the quiz, with a live "Your Case File" summary on desktop |
 
 Each page is a single screen: logo and language toggle, the quiz, and the required attorney
 advertising notice. There is no phone number or call button, so visitors complete the form.
