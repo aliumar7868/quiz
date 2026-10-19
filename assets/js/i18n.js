@@ -1,14 +1,16 @@
 /*
  * English / Spanish support for the 305-EN-DOLOR landing pages.
  *
- * Language is chosen in this order:
+ * When LP_CONFIG.lang is set ('es' or 'en') the site is locked to that
+ * language and the language toggle is removed. Otherwise the language is
+ * chosen in this order:
  *   1. ?lang=es or ?lang=en in the URL (handy for ads that target one language)
  *   2. A language the visitor picked with the on page toggle
  *   3. The visitor's phone / browser language (Spanish => es, anything else => en)
  *
  * Mark up text with data-i18n="key" (inner HTML is replaced), attributes with
- * data-i18n-attr="placeholder:key;aria-label:key", and links to the main site
- * with data-site-path="/privacy" (becomes https://305endolor.com/{lang}/privacy).
+ * data-i18n-attr="placeholder:key;aria-label:key", and legal links with
+ * data-site-path="/privacy" (resolved through LP_CONFIG.links).
  */
 (function () {
   'use strict';
@@ -26,7 +28,13 @@
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* private mode */ }
   }
 
+  function locked() {
+    var l = window.LP_CONFIG && window.LP_CONFIG.lang;
+    return SUPPORTED.indexOf(l) !== -1 ? l : null;
+  }
+
   function detect() {
+    if (locked()) return locked();
     var param = new URLSearchParams(window.location.search).get('lang');
     if (param && SUPPORTED.indexOf(param.toLowerCase()) !== -1) return param.toLowerCase();
 
@@ -48,6 +56,15 @@
     return base + '/' + (lang || api.lang) + (path || '');
   }
 
+  // Legal links come from LP_CONFIG.links ({lang} is filled in); an empty
+  // value means the site has no such page.
+  var LINK_OF = { '/privacy': 'privacy', '/terms': 'terms', '/state-disclosures': 'disclosures' };
+  function legalUrl(path, lang) {
+    var links = window.LP_CONFIG && window.LP_CONFIG.links;
+    if (!links) return siteUrl(path, lang);
+    return (links[LINK_OF[path]] || '').replace('{lang}', lang || api.lang);
+  }
+
   function t(key, vars, lang) {
     lang = lang || api.lang;
     var str = dict[lang][key];
@@ -56,9 +73,10 @@
     var cfg = window.LP_CONFIG || {};
     var all = {
       brand: cfg.brand,
-      privacyUrl: siteUrl('/privacy', lang),
-      termsUrl: siteUrl('/terms', lang),
-      statesUrl: siteUrl('/state-disclosures', lang)
+      owner: cfg.owner || 'LegalNow247.com LLC',
+      privacyUrl: legalUrl('/privacy', lang),
+      termsUrl: legalUrl('/terms', lang),
+      statesUrl: legalUrl('/state-disclosures', lang)
     };
     for (var k in vars) if (Object.prototype.hasOwnProperty.call(vars, k)) all[k] = vars[k];
     return str.replace(/\{(\w+)\}/g, function (m, name) {
@@ -79,9 +97,15 @@
       });
     });
     root.querySelectorAll('[data-site-path]').forEach(function (el) {
-      el.setAttribute('href', siteUrl(el.getAttribute('data-site-path')));
+      var url = legalUrl(el.getAttribute('data-site-path'));
+      if (url) el.setAttribute('href', url);
+      else (el.closest('li') || el).hidden = true;
     });
+    if (!legalUrl('/state-disclosures')) {
+      root.querySelectorAll('[data-i18n="footer.states"]').forEach(function (el) { el.hidden = true; });
+    }
     root.querySelectorAll('[data-lang-toggle]').forEach(function (el) {
+      if (locked()) { el.remove(); return; }
       el.textContent = t('lang.switch');
       el.setAttribute('aria-label', t('lang.switchAria'));
       el.setAttribute('lang', api.lang === 'en' ? 'es' : 'en');
@@ -109,6 +133,8 @@
     apply: apply,
     setLang: setLang,
     siteUrl: siteUrl,
+    legalUrl: legalUrl,
+    locked: locked,
     escapeHtml: escapeHtml,
     extend: function (more) {
       SUPPORTED.forEach(function (l) {
@@ -128,7 +154,7 @@
     document.documentElement.classList.remove('i18n-pending');
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-lang-toggle]');
-      if (!btn) return;
+      if (!btn || locked()) return;
       e.preventDefault();
       setLang(api.lang === 'en' ? 'es' : 'en', true);
     });
@@ -141,11 +167,11 @@
     en: {
       'lang.switch': 'Español',
       'lang.switchAria': 'Ver esta página en español',
-      'header.spanish': 'English &amp; Spanish · 24/7',
+      'header.spanish': 'Free help · 24/7',
       'trust.free': '100% Free Consultation',
       'trust.fast': '5 Min Response · 24/7',
       'trust.nofee': 'No Upfront Fees',
-      'trust.bilingual': 'English &amp; Spanish',
+      'trust.bilingual': 'No Obligation',
 
       'q.stepOf': 'Step {n} of {total}',
       'q.questionOf': 'Question {n} of {total}',
@@ -181,14 +207,14 @@
       'f.submit': 'Get My Free Case Review',
       'f.sending': 'Sending…',
       'f.error': 'Something went wrong. Please check your connection and try again.',
-      'f.consent': 'By clicking “{button}”, I agree that {brand} (operated by LegalNow247.com LLC) and its participating attorneys may contact me about my accident at the phone number and email I provided, including by calls and text messages that may use automated technology or prerecorded or artificial voice messages, even if my number is on a Do Not Call list. Consent is not a condition of any purchase or service. Message and data rates may apply; reply STOP to opt out. I agree to the <a href="{privacyUrl}" target="_blank" rel="noopener">Privacy Policy</a> and <a href="{termsUrl}" target="_blank" rel="noopener">Terms of Use</a>.',
+      'f.consent': 'By clicking “{button}”, I agree that {brand} (operated by {owner}) and its participating attorneys may contact me about my accident at the phone number and email I provided, including by calls and text messages that may use automated technology or prerecorded or artificial voice messages, even if my number is on a Do Not Call list. Consent is not a condition of any purchase or service. Message and data rates may apply; reply STOP to opt out. I agree to the <a href="{privacyUrl}" target="_blank" rel="noopener">Privacy Policy</a> and <a href="{termsUrl}" target="_blank" rel="noopener">Terms of Use</a>.',
 
       'done.title': 'Thank you, {name}!',
       'done.titleNoName': 'Thank you!',
-      'done.text': 'Your free case review request was received. A bilingual case specialist will call you shortly. Please keep your phone nearby and answer the call.',
+      'done.text': 'Your free case review request was received. A case specialist will call you shortly. Please keep your phone nearby and answer the call.',
       'done.next': 'What happens next',
       'done.1': 'A specialist reviews your answers, usually within 5 minutes during business hours.',
-      'done.2': 'We call you to hear what happened and answer your questions, in English or Spanish.',
+      'done.2': 'We call you to hear what happened and answer your questions.',
       'done.3': 'If you have a case, we connect you with an attorney. No upfront fees.',
 
       'footer.notice': '<strong>NOTICE ABOUT ATTORNEY ADVERTISING:</strong> This website is a pooled attorney advertisement. 305-EN-DOLOR is not a law firm or a lawyer referral service. Attorneys appearing on 305-EN-DOLOR have paid an advertising fee. Using 305-EN-DOLOR is not intended to and does not create an attorney client relationship between a Subscriber Attorney and any Requestors. The information contained on 305-EN-DOLOR is not legal advice and the subscriber attorneys listed do not in any way constitute a referral or endorsement by this site. 305-EN-DOLOR is owned and operated by LegalNow247.com LLC.',
@@ -196,16 +222,16 @@
       'footer.privacy': 'Privacy Policy',
       'footer.terms': 'Terms of Use',
       'footer.disclosures': 'State Disclosures',
-      'footer.rights': '© 2026 305-EN-DOLOR. All rights reserved. Serving all of Florida.'
+      'footer.rights': '© 2026 {brand}. All rights reserved. Serving all of Florida.'
     },
     es: {
       'lang.switch': 'English',
       'lang.switchAria': 'View this page in English',
-      'header.spanish': 'Español e inglés · 24/7',
+      'header.spanish': 'Atención en español · 24/7',
       'trust.free': 'Consulta 100% gratis',
       'trust.fast': 'Respuesta en 5 min · 24/7',
       'trust.nofee': 'Sin honorarios por adelantado',
-      'trust.bilingual': 'Inglés y Español',
+      'trust.bilingual': 'Atención en español',
 
       'q.stepOf': 'Paso {n} de {total}',
       'q.questionOf': 'Pregunta {n} de {total}',
@@ -241,14 +267,14 @@
       'f.submit': 'Obtener mi revisión gratis',
       'f.sending': 'Enviando…',
       'f.error': 'Algo salió mal. Revisa tu conexión e inténtalo de nuevo.',
-      'f.consent': 'Al hacer clic en “{button}”, acepto que {brand} (operado por LegalNow247.com LLC) y sus abogados participantes me contacten sobre mi accidente al número de teléfono y correo electrónico que proporcioné, incluso mediante llamadas y mensajes de texto que pueden usar tecnología automatizada o mensajes pregrabados o de voz artificial, aunque mi número esté en una lista de No Llamar. El consentimiento no es una condición para ninguna compra o servicio. Pueden aplicarse tarifas de mensajes y datos; responde STOP para cancelar. Acepto la <a href="{privacyUrl}" target="_blank" rel="noopener">Política de privacidad</a> y los <a href="{termsUrl}" target="_blank" rel="noopener">Términos de uso</a>.',
+      'f.consent': 'Al hacer clic en “{button}”, acepto que {brand} (operado por {owner}) y sus abogados participantes me contacten sobre mi accidente al número de teléfono y correo electrónico que proporcioné, incluso mediante llamadas y mensajes de texto que pueden usar tecnología automatizada o mensajes pregrabados o de voz artificial, aunque mi número esté en una lista de No Llamar. El consentimiento no es una condición para ninguna compra o servicio. Pueden aplicarse tarifas de mensajes y datos; responde STOP para cancelar. Acepto la <a href="{privacyUrl}" target="_blank" rel="noopener">Política de privacidad</a> y los <a href="{termsUrl}" target="_blank" rel="noopener">Términos de uso</a>.',
 
       'done.title': '¡Gracias, {name}!',
       'done.titleNoName': '¡Gracias!',
       'done.text': 'Recibimos tu solicitud de revisión gratuita. Un especialista bilingüe te llamará en breve. Ten tu teléfono a la mano y contesta la llamada.',
       'done.next': 'Qué sigue',
       'done.1': 'Un especialista revisa tus respuestas, normalmente en 5 minutos durante el horario de atención.',
-      'done.2': 'Te llamamos para escuchar lo que pasó y responder tus preguntas, en español o en inglés.',
+      'done.2': 'Te llamamos para escuchar lo que pasó y responder tus preguntas, en español.',
       'done.3': 'Si tienes un caso, te conectamos con un abogado. Sin honorarios por adelantado.',
 
       'footer.notice': '<strong>AVISO SOBRE PUBLICIDAD DE ABOGADOS:</strong> Este sitio web es un anuncio colectivo de abogados. 305-EN-DOLOR no es un bufete de abogados ni un servicio de referencia de abogados. Los abogados que aparecen en 305-EN-DOLOR han pagado una tarifa publicitaria. El uso de 305-EN-DOLOR no pretende ni crea una relación abogado cliente entre un Abogado Suscriptor y cualquier Solicitante. La información contenida en 305-EN-DOLOR no es asesoramiento legal y los abogados suscriptores enumerados no constituyen de ninguna manera una referencia o respaldo por parte de este sitio. 305-EN-DOLOR es propiedad de LegalNow247.com LLC.',
@@ -256,7 +282,9 @@
       'footer.privacy': 'Política de privacidad',
       'footer.terms': 'Términos de uso',
       'footer.disclosures': 'Avisos estatales',
-      'footer.rights': '© 2026 305-EN-DOLOR. Todos los derechos reservados. Atendemos todo el estado de Florida.'
+      'footer.rights': '© 2026 {brand}. Todos los derechos reservados. Atendemos todo el estado de Florida.'
     }
   });
+
+  if (window.LP_CONFIG && window.LP_CONFIG.strings) api.extend(window.LP_CONFIG.strings);
 })();

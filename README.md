@@ -1,9 +1,9 @@
 # 305-EN-DOLOR quiz landing pages
 
-Three bilingual (English / Spanish) intake quiz landing pages branded like
-[305endolor.com](https://305endolor.com/en). Plain HTML, CSS and JavaScript:
-no build step, so the folder can be uploaded to any static host
-(Netlify, Vercel, Cloudflare Pages, GitHub Pages, S3, cPanel, etc.).
+Three intake quiz landing pages, published as two sites: a Spanish only
+305 En Dolor site and an English only LegalNow247 site. Plain HTML, CSS and
+JavaScript; `build.py` (Python 3, no dependencies) generates the upload ready
+folders for any static host (cPanel, Netlify, Cloudflare Pages, S3, etc.).
 
 | Page | Path | Style |
 | --- | --- | --- |
@@ -11,14 +11,28 @@ no build step, so the folder can be uploaded to any static host
 | Case Scan | `/case-scan/` | App style flow with stage tracker, name first and personalized questions, animated scan before the contact step |
 | Find Out If You Have a Case | `/free-check/` | Simple headline next to the quiz, with a live "Your Case File" summary on desktop |
 
-Each page is a single screen: logo and language toggle, the quiz, and the required attorney
+Each page is a single screen: the logo, the quiz, and the required attorney
 advertising notice. There is no phone number or call button, so visitors complete the form.
 
 `/index.html` is a simple page with a button for each landing page (marked `noindex`).
 
+## Two live sites
+
+`python3 build.py` builds the sites you upload, one folder and zip per site in `dist/`:
+
+| Site | Folder | Language | Leads go to |
+| --- | --- | --- | --- |
+| 305 En Dolor | `dist/305-en-dolor-es/` | Spanish only | 305 En Dolor GHL webhook |
+| LegalNow247 | `dist/legalnow247-en/` | English only | LegalNow247 GHL webhook (set it in `build.py`) |
+
+Each site has its own logo, brand name, legal footer and links, and both carry the Meta Pixel.
+Upload the contents of a site's folder to its subdomain. Change site settings (webhook, pixel,
+links, logo) in the `SITES` list in `build.py`, then run the build again.
+
 ## Language
 
-Each page picks its language automatically:
+On the live sites the language is locked (`lang` in the site settings) and there is no language
+button. The source pages in this folder still switch automatically for development:
 
 1. `?lang=es` or `?lang=en` in the URL (useful for Spanish or English ad campaigns)
 2. The language the visitor chose with the English / Español button (remembered on their device)
@@ -43,7 +57,7 @@ The order of the steps is set in the `LPQuiz.mount({ steps: [...] })` call at th
 
 ## Sending leads
 
-Set `webhookUrl` in `assets/js/config.js` to a GoHighLevel Inbound Webhook (or a Zapier, Make or CRM webhook).
+Set `webhookUrl` for each site in `build.py` to a GoHighLevel Inbound Webhook (or a Zapier, Make or CRM webhook).
 Leads are POSTed as JSON. If a webhook refuses requests sent from a browser, set `webhookFormat: 'form'`
 to send them form encoded instead. Fields sent:
 
@@ -70,4 +84,4 @@ Tracking: the quiz pushes `quiz_start`, `quiz_step` and `lead_submit` events to 
 ## Before launch
 
 * Have counsel review the TCPA consent text (`f.consent` in `assets/js/i18n.js`) and the attorney advertising notice.
-* Add your GTM / Meta Pixel snippets to each page `<head>`.
+* The Meta Pixel is added to every page by `build.py`; the quiz also fires `fbq('track', 'Lead')` on submit.
